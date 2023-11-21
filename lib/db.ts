@@ -5,7 +5,7 @@ declare global {
 }
 
 // globalThis는 전역객체에 접근할 수 있는 식별자
-const db = globalThis.prisma || new PrismaClient();
+export const db = globalThis.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") globalThis.prisma = db;
 
