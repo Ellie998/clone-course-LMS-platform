@@ -23,6 +23,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   ];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
+  // course에 등록되지 않는 값들은 null을 return하므로 Boolean으로 filter하면 값이 존재하는 것들만 남는다.
 
   const completionText = `(${completedFields}/${totalFields})`;
 
