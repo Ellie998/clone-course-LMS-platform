@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { File, PlusCircle } from "lucide-react";
+import { File, Loader2, PlusCircle, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { Attachment, Course } from "@prisma/client";
 
@@ -26,6 +26,7 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
   const router = useRouter();
 
   const [isEdditing, setIsEdditing] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const toggleEdit = () => setIsEdditing((current: any) => !current);
 
@@ -37,6 +38,19 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
+    }
+  };
+
+  const onDelete = async (id: string) => {
+    try {
+      setDeletingId(id);
+      await axios.delete(`/api/course/${courseId}/attachments/${id}`);
+      toast.success("Attachment Deleted");
+      router.refresh();
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -69,6 +83,18 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
                   className="flex items-center w-full p-3 border rounded-md bg-sky-100 border-sky-200 text-sky-700">
                   <File className="flex-shrink-0 w-4 h-4 mr-2" />
                   <p className="text-xs line-clamp-1">{attachment.name}</p>
+                  {deletingId === attachment.id && (
+                    <div>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    </div>
+                  )}
+                  {deletingId !== attachment.id && (
+                    <button
+                      className="ml-auto transition hover:opacity-75"
+                      onClick={() => onDelete(attachment.id)}>
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
