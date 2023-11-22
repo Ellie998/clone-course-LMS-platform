@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { PlusCircle } from "lucide-react";
+import { File, PlusCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { Attachment, Course } from "@prisma/client";
 
@@ -60,6 +60,18 @@ const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
             <p className="mt-2 text-sm italic text-slate-500 ">
               No attachments yet
             </p>
+          )}
+          {initialData.attachments.length > 0 && (
+            <div className="space-x-2">
+              {initialData.attachments.map((attachment) => (
+                <div
+                  key={attachment.id}
+                  className="flex items-center w-full p-3 border rounded-md bg-sky-100 border-sky-200 text-sky-700">
+                  <File className="flex-shrink-0 w-4 h-4 mr-2" />
+                  <p className="text-xs line-clamp-1">{attachment.name}</p>
+                </div>
+              ))}
+            </div>
           )}
         </>
       )}
