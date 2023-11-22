@@ -34,14 +34,14 @@ export const Combobox = ({ options, value, onChange }: ComboBoxProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between">
+          className="justify-between w-full">
           {value
             ? options.find((option) => option.value === value)?.label
             : "Select option..."}
           <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandEmpty>No option found.</CommandEmpty>
