@@ -61,7 +61,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     try {
       setIsUpdating(true);
 
-      await axios.put(`/api/course/${courseId}/chapters/reorder`, {
+      await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
         list: updateDate,
       });
       toast.success("Chapters reordered");
