@@ -41,7 +41,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { title: "" },
+    defaultValues: { title: initialData?.title || "" },
   });
 
   const { isSubmitting, isValid } = form.formState;
