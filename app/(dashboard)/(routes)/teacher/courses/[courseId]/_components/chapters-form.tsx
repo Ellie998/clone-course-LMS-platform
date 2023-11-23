@@ -72,11 +72,14 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       setIsUpdating(false);
     }
   };
+  const onEdit = async (id: string) => {
+    router.push(`/teacher/courses/${courseId}/chapter/${id}`);
+  };
 
   return (
-    <div className="relative p-4 mt-6 border rounded-md  bg-slate-100">
+    <div className="relative p-4 mt-6 border rounded-md bg-slate-100">
       {isUpdating && (
-        <div className="absolute top-0 right-0 flex items-center justify-center w-full h-full rounded-md  bg-slate-500/20">
+        <div className="absolute top-0 right-0 flex items-center justify-center w-full h-full rounded-md bg-slate-500/20">
           <Loader2 className="w-6 h-6 animate-spin text-sky-700" />
         </div>
       )}
@@ -130,7 +133,7 @@ const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
           )}>
           {!initialData.chapters.length && "No Chapters"}
           <ChaptersList
-            onEdit={() => {}}
+            onEdit={onEdit}
             onReorder={onReorder}
             items={initialData.chapters || []}
           />
