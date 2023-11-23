@@ -7,9 +7,9 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
-  FormMessage,
 } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
@@ -19,8 +19,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Chapter } from "@prisma/client";
-import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ChapterAccessFormProps {
   initialData: Chapter;
@@ -29,7 +29,7 @@ interface ChapterAccessFormProps {
 }
 
 const formSchema = z.object({
-  description: z.string().min(1),
+  isFree: z.boolean().default(false),
 });
 
 const ChapterAccessForm = ({
@@ -45,7 +45,7 @@ const ChapterAccessForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { description: initialData?.description || "" },
+    defaultValues: { isFree: !!initialData.isFree },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -67,14 +67,14 @@ const ChapterAccessForm = ({
   return (
     <div className="p-4 mt-6 border rounded-md bg-slate-100">
       <div className="flex items-center justify-between font-medium">
-        Chapter description
+        Chapter access
         <Button variant={"ghost"} onClick={toggleEdit}>
           {isEdditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="w-4 h-4 mr-2" />
-              Edit description
+              Edit access
             </>
           )}
         </Button>
@@ -83,11 +83,12 @@ const ChapterAccessForm = ({
         <div
           className={cn(
             "text-sm mt-2",
-            !initialData.description && "text-slate-500 italic"
+            !initialData.isFree && "text-slate-500 italic"
           )}>
-          {!initialData.description && "No Description"}
-          {initialData.description && (
-            <Preview value={initialData.description} />
+          {initialData.isFree ? (
+            <>This chapter is free for preview.</>
+          ) : (
+            <>This chapter is not free.</>
           )}
         </div>
       ) : (
@@ -97,13 +98,21 @@ const ChapterAccessForm = ({
             className="mt-4 space-y-4 ">
             <FormField
               control={form.control}
-              name="description"
+              name="isFree"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-row items-start p-4 space-x-3 space-y-0 border rounded-md">
                   <FormControl>
-                    <Editor {...field} />
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <div className="space-y-1 leading-none">
+                    <FormDescription>
+                      Check this box if you want to makr this chapter free for
+                      preview
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />
