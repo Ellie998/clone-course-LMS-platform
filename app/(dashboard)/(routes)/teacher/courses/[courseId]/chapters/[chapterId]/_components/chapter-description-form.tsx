@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Chapter } from "@prisma/client";
 import { Editor } from "@/components/editor";
+import { Preview } from "@/components/preview";
 
 interface ChapterDescriptionFormProps {
   initialData: Chapter;
@@ -79,13 +80,16 @@ const ChapterDescriptionForm = ({
         </Button>
       </div>
       {!isEdditing ? (
-        <p
+        <div
           className={cn(
             "text-sm mt-2",
             !initialData.description && "text-slate-500 italic"
           )}>
-          {initialData.description || "No Description"}
-        </p>
+          {!initialData.description && "No Description"}
+          {initialData.description && (
+            <Preview value={initialData.description} />
+          )}
+        </div>
       ) : (
         <Form {...form}>
           <form
