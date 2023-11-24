@@ -41,6 +41,8 @@ const ChapterActions = ({
         );
         toast.success("Chapter published");
       }
+
+      router.refresh();
     } catch (error) {
       toast.error("Somthing went wrong");
     } finally {
