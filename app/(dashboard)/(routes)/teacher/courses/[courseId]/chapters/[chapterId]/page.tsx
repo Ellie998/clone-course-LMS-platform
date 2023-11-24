@@ -73,7 +73,7 @@ const ChapterIdPage = async ({
                 </span>
               </div>
               <ChapterActions
-                disable={isComplete}
+                disable={!isComplete}
                 courseId={params.courseId}
                 chapterId={params.chapterId}
                 isPublished={chapter.isPublished}
