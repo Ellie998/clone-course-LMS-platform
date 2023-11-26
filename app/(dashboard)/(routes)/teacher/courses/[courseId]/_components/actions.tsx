@@ -26,10 +26,10 @@ const Actions = ({ disable, courseId, isPublished }: ActionProps) => {
 
       if (isPublished) {
         await axios.patch(`/api/courses/${courseId}/unpublish`);
-        toast.success("Chapter unpublished");
+        toast.success("Course unpublished");
       } else {
         await axios.patch(`/api/courses/${courseId}/publish`);
-        toast.success("Chapter published");
+        toast.success("Course published");
       }
 
       router.refresh();
@@ -46,9 +46,9 @@ const Actions = ({ disable, courseId, isPublished }: ActionProps) => {
 
       await axios.delete(`/api/courses/${courseId}`);
 
-      toast.success("Chapter deleted");
+      toast.success("Course deleted");
       router.refresh();
-      router.push(`/teacher/courses/${courseId}`);
+      router.push(`/teacher/courses`);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
