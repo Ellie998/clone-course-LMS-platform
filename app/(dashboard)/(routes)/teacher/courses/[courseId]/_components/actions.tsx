@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface ActionProps {
   disable: boolean;
@@ -17,7 +18,7 @@ interface ActionProps {
 
 const Actions = ({ disable, courseId, isPublished }: ActionProps) => {
   const router = useRouter();
-
+  const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
@@ -30,6 +31,7 @@ const Actions = ({ disable, courseId, isPublished }: ActionProps) => {
       } else {
         await axios.patch(`/api/courses/${courseId}/publish`);
         toast.success("Course published");
+        confetti.onOpen();
       }
 
       router.refresh();
