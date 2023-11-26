@@ -19,17 +19,17 @@ interface CategoriesProps {
 
 const iconMap: Record<Category["name"], IconType> = {
   Music: FcMusic,
-  Photograpy: FcOldTimeCamera,
+  Photography: FcOldTimeCamera,
   Fitness: FcSportsMode,
   Accounting: FcSalesPerformance,
   "Computer Science": FcMultipleDevices,
   Filming: FcFilmReel,
-  Engineering: FcEngineering,
+  Enginnering: FcEngineering,
 };
 
 const Categories = ({ items }: CategoriesProps) => {
   return (
-    <div className="flex items-center pb-2 overflow-x-auto gpa-x-2">
+    <div className="flex items-center pb-2 overflow-x-auto gap-x-2">
       {items.map((item) => (
         <CategoryItem
           key={item.id}
