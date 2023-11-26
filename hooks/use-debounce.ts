@@ -1,4 +1,3 @@
-import { Timer } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function useDebounce<T>(value: T, delay?: number): T {
@@ -10,7 +9,7 @@ export function useDebounce<T>(value: T, delay?: number): T {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [value, delay]);
 
   return debouncedValue;
 }
