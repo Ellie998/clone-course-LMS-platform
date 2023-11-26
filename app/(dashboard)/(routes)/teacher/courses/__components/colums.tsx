@@ -22,7 +22,10 @@ export const columns: ColumnDef<Course>[] = [
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          onClick={() => {
+            column.toggleSorting(column.getIsSorted() === "asc");
+            console.log(column);
+          }}>
           Title
           <ArrowUpDown className="w-4 h-4 ml-2" />
         </Button>
