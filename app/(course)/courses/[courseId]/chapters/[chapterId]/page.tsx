@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export default async function ChapterIdPage({
@@ -6,27 +6,14 @@ export default async function ChapterIdPage({
 }: {
   params: {
     courseId: string;
+    chapterId: string;
   };
 }) {
-  const course = await db.course.findUnique({
-    where: {
-      id: params.courseId,
-    },
-    include: {
-      chapters: {
-        where: {
-          isPublished: true,
-        },
-        orderBy: {
-          position: "asc",
-        },
-      },
-    },
-  });
+  const { userId } = auth();
 
-  if (!course) {
+  if (!userId) {
     return redirect("/");
   }
 
-  return redirect(`/courses/${course.id}/chapters/${course.chapters[0].id}`);
+  return;
 }
