@@ -1,3 +1,4 @@
+import NavbarRoutes from "@/components/navbar-routes";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 
 interface CourseNavBarProps {
@@ -10,5 +11,9 @@ interface CourseNavBarProps {
 }
 
 export const CourseNavbar = ({ course, progressCount }: CourseNavBarProps) => {
-  return <div>Course Nav Bar</div>;
+  return (
+    <div className="flex items-center h-full p-4 bg-white border-b shadow-sm">
+      <NavbarRoutes />
+    </div>
+  );
 };
