@@ -2,6 +2,7 @@ import { getChapter } from "@/actions/get-chapter";
 import Banner from "@/components/banner";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { VideoPlayer } from "./_components/video-player";
 
 export default async function ChapterIdPage({
   params,
@@ -36,7 +37,7 @@ export default async function ChapterIdPage({
   }
 
   const isLocked = !chapter.isFree && !purchase;
-  const completeInEnd = !!purchase && !userProgress?.isCompleted;
+  const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
   return (
     <div>
@@ -52,6 +53,19 @@ export default async function ChapterIdPage({
           variant={"warning"}
         />
       )}
+      <div className="flex flex-col max-w-4xl pb-20 mx-auto">
+        <div className="p-4 ">
+          <VideoPlayer
+            chapterId={params.chapterId}
+            title={chapter.title}
+            courseId={params.courseId}
+            nextChapterId={nextChapter?.id}
+            playbackId={muxData?.playbackId}
+            isLocked={isLocked}
+            completeOnEnd={completeOnEnd}
+          />
+        </div>
+      </div>
     </div>
   );
 }
