@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { getAnalytics } from "@/actions/get-analytics";
+import { DataCard } from "./_components/data-card";
 
 const AnalyticsPage = async () => {
   const { userId } = auth();
@@ -15,7 +16,8 @@ const AnalyticsPage = async () => {
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2">
-        {/* <DataCard/> */}
+        <DataCard label={"Total Revenue"} value={totalRevenue} />
+        <DataCard label={"Total Sales"} value={totalSales} shouldFormat />
       </div>
     </div>
   );
